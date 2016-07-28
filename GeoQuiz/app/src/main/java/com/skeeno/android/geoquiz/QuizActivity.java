@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class QuizActivity extends AppCompatActivity {
 
     private final String TAG = "QuizActivity";
+    private final String INDEX = "index";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -36,7 +37,11 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "OnCreate(Bundle called");
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.content_quiz);
+
+        if(savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(INDEX);
+        }
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         setQuestion();
@@ -65,9 +70,13 @@ public class QuizActivity extends AppCompatActivity {
                 setQuestion();
             }
         });
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "OnSaveInstanceState");
+        savedInstanceState.putInt(INDEX, mCurrentIndex);
     }
 
     @Override
