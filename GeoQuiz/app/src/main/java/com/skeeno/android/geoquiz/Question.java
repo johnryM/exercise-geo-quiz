@@ -6,6 +6,7 @@ package com.skeeno.android.geoquiz;
 public class Question {
     private int mTextResId;
     private boolean mAnswerTrue;
+    private boolean previouslyCheated = false;
 
     public Question(int textResId, boolean answerTrue) {
         mTextResId = textResId;
@@ -26,5 +27,13 @@ public class Question {
 
     public void setAnswerTrue(boolean answerTrue) {
         mAnswerTrue = answerTrue;
+    }
+
+    public boolean isPreviouslyCheated() {
+        return previouslyCheated;
+    }
+
+    public void setPreviouslyCheated(boolean previouslyCheated) {
+        this.previouslyCheated = previouslyCheated;
     }
 }

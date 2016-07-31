@@ -15,7 +15,9 @@ public class QuizActivity extends AppCompatActivity {
 
     private final String TAG = "QuizActivity";
     private final String INDEX = "index";
+    private final String ISCHEATER = "isCheater";
     private final int REQUEST_CODE_CHEAT = 0;
+
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -32,7 +34,7 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
-    private boolean mIsCheater;
+    private boolean mIsCheater = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if(savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(INDEX);
+            mIsCheater = savedInstanceState.getBoolean(ISCHEATER);
         }
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -95,6 +98,7 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater =  CheatActivity.wasAnswerShown(data);
+            mQuestionBank[mCurrentIndex].setPreviouslyCheated(true);
         }
     }
 
@@ -103,6 +107,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "OnSaveInstanceState");
         savedInstanceState.putInt(INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(ISCHEATER, mIsCheater);
     }
 
     @Override
@@ -168,7 +173,7 @@ public class QuizActivity extends AppCompatActivity {
 
         int messageResId = 0;
 
-        if (mIsCheater) {
+        if (mIsCheater || mQuestionBank[mCurrentIndex].isPreviouslyCheated()) {
             messageResId = R.string.judgement_toast;
         } else {
             if (userPressedTrue == answerIsTrue) {

@@ -19,7 +19,7 @@ public class CheatActivity extends AppCompatActivity {
     private static final String KEY_SAVE_CHEATED = "saveCheated";
 
     private boolean mAnswerIsTrue;
-    private boolean mUserCheated;
+    private boolean mUserCheated = false;
 
     //layout stuff
     private TextView mAnswerTextView;
