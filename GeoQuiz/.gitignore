@@ -1,13 +1,10 @@
 *.iml
 .gradle
 /local.properties
-.idea/codeStyleSettings.xml
-.idea/libraries
+.idea
 
 .DS_Store
 /build
 /captures
-.idea/vcs.xml
-.idea/workspace.xml
 app/libs/
 app/src/main/res/drawable/
