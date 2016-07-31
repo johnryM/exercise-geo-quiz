@@ -11,10 +11,17 @@ import android.widget.TextView;
 
 public class CheatActivity extends AppCompatActivity {
 
+    //extras
     private static final String EXTRA_ANSWER_IS_TRUE = "com.skeeno.android.geoquiz.is_answer_true";
     private static final String EXTRA_ANSWER_SHOWN = "com.skeeno.android.geoquiz.answer_shown";
-    private boolean mAnswerIsTrue;
 
+    //bundle keys
+    private static final String KEY_SAVE_CHEATED = "saveCheated";
+
+    private boolean mAnswerIsTrue;
+    private boolean mUserCheated;
+
+    //layout stuff
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
 
@@ -35,6 +42,11 @@ public class CheatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (savedInstanceState != null) {
+            mUserCheated = savedInstanceState.getBoolean(KEY_SAVE_CHEATED,false);
+            setAnswerShownResult(mUserCheated);
+        }
+
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
         mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
@@ -48,10 +60,17 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
-                setAnswerShownResult(true);
+                mUserCheated = true;
+                setAnswerShownResult(mUserCheated);
             }
         });
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_SAVE_CHEATED, mUserCheated);
     }
 
     private void setAnswerShownResult(boolean isAnswerShown) {
